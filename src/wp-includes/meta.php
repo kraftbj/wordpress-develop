@@ -1059,7 +1059,7 @@ function is_protected_meta( $meta_key, $meta_type = null ) {
  *
  * @param string $meta_key       Meta key.
  * @param mixed  $meta_value     Meta value to sanitize.
- * @param string $object_type    Type of object the meta is registered to.
+ * @param string $object_type    Type of object this meta is registered to. Accepts any value with an associated meta table. (e.g. comment, post, term, user, my_custom_meta)
  * @param string $object_subtype Optional. The subtype of the object type.
  *
  * @return mixed Sanitized $meta_value.
@@ -1078,7 +1078,7 @@ function sanitize_meta( $meta_key, $meta_value, $object_type, $object_subtype = 
 		 *
 		 * @param mixed  $meta_value     Meta value to sanitize.
 		 * @param string $meta_key       Meta key.
-		 * @param string $object_type    Object type.
+		 * @param string $object_type    Type of object this meta is registered to. Accepts any value with an associated meta table. (e.g. comment, post, term, user, my_custom_meta)
 		 * @param string $object_subtype Object subtype.
 		 */
 		return apply_filters( "sanitize_{$object_type}_meta_{$meta_key}_for_{$object_subtype}", $meta_value, $meta_key, $object_type, $object_subtype );
@@ -1095,7 +1095,7 @@ function sanitize_meta( $meta_key, $meta_value, $object_type, $object_subtype = 
 	 *
 	 * @param mixed  $meta_value      Meta value to sanitize.
 	 * @param string $meta_key        Meta key.
-	 * @param string $object_type     Object type.
+ 	 * @param string $object_type     Type of object this meta is registered to. Accepts any value with an associated meta table. (e.g. comment, post, term, user, my_custom_meta)
 	 */
 	return apply_filters( "sanitize_{$object_type}_meta_{$meta_key}", $meta_value, $meta_key, $object_type );
 }
@@ -1117,7 +1117,7 @@ function sanitize_meta( $meta_key, $meta_value, $object_type, $object_subtype = 
  * @since 4.9.8 The `$object_subtype` argument was added to the arguments array.
  * @since 5.3.0 Valid meta types expanded to include "array" and "object".
  *
- * @param string $object_type    Type of object this meta is registered to.
+ * @param string $object_type    Type of object this meta is registered to. Accepts any value with an associated meta table. (e.g. comment, post, term, user, my_custom_meta)
  * @param string $meta_key       Meta key to register.
  * @param array  $args {
  *     Data used to describe the meta key when registered.
@@ -1186,7 +1186,7 @@ function register_meta( $object_type, $meta_key, $args, $deprecated = null ) {
 	 *
 	 * @param array  $args        Array of meta registration arguments.
 	 * @param array  $defaults    Array of default arguments.
-	 * @param string $object_type Object type.
+ 	 * @param string $object_type Type of object this meta is registered to. Accepts any value with an associated meta table. (e.g. comment, post, term, user, my_custom_meta)
 	 * @param string $meta_key    Meta key.
 	 */
 	$args = apply_filters( 'register_meta_args', $args, $defaults, $object_type, $meta_key );
@@ -1247,7 +1247,7 @@ function register_meta( $object_type, $meta_key, $args, $deprecated = null ) {
  * @since 4.6.0
  * @since 4.9.8 The `$object_subtype` parameter was added.
  *
- * @param string $object_type    The type of object.
+ * @param string $object_type    Type of object this meta is registered to. Accepts any value with an associated meta table. (e.g. comment, post, term, user, my_custom_meta)
  * @param string $meta_key       The meta key.
  * @param string $object_subtype Optional. The subtype of the object type.
  *
@@ -1266,7 +1266,7 @@ function registered_meta_key_exists( $object_type, $meta_key, $object_subtype = 
  * @since 4.6.0
  * @since 4.9.8 The `$object_subtype` parameter was added.
  *
- * @param string $object_type    The type of object.
+ * @param string $object_type    Type of object this meta is registered to. Accepts any value with an associated meta table. (e.g. comment, post, term, user, my_custom_meta)
  * @param string $meta_key       The meta key.
  * @param string $object_subtype Optional. The subtype of the object type.
  * @return bool True if successful. False if the meta key was not registered.
@@ -1315,7 +1315,7 @@ function unregister_meta_key( $object_type, $meta_key, $object_subtype = '' ) {
  * @since 4.6.0
  * @since 4.9.8 The `$object_subtype` parameter was added.
  *
- * @param string $object_type    The type of object. Post, comment, user, term.
+ * @param string $object_type    Type of object this meta is registered to. Accepts any value with an associated meta table. (e.g. comment, post, term, user, my_custom_meta)
  * @param string $object_subtype Optional. The subtype of the object type.
  * @return string[] List of registered meta keys.
  */
@@ -1337,7 +1337,7 @@ function get_registered_meta_keys( $object_type, $object_subtype = '' ) {
  *
  * @since 4.6.0
  *
- * @param string $object_type Type of object to request metadata for. (e.g. comment, post, term, user)
+ * @param string $object_type Type of object this meta is registered to. Accepts any value with an associated meta table. (e.g. comment, post, term, user, my_custom_meta)
  * @param int    $object_id   ID of the object the metadata is for.
  * @param string $meta_key    Optional. Registered metadata key. If not specified, retrieve all registered
  *                            metadata for the specified object.
@@ -1399,7 +1399,7 @@ function _wp_register_meta_args_whitelist( $args, $default_args ) {
  *
  * @since 4.9.8
  *
- * @param string $object_type Type of object to request metadata for. (e.g. comment, post, term, user)
+ * @param string $object_type Type of object this meta is registered to. Accepts any value with an associated meta table. (e.g. comment, post, term, user, my_custom_meta)
  * @param int    $object_id   ID of the object to retrieve its subtype.
  * @return string The object subtype or an empty string if unspecified subtype.
  */
