@@ -58,9 +58,8 @@ class IXR_Client
 		self::__construct( $server, $path, $port, $timeout );
 	}
 
-    function query()
+    function query( ...$args )
     {
-        $args = func_get_args();
         $method = array_shift($args);
         $request = new IXR_Request($method, $args);
         $length = $request->getLength();
