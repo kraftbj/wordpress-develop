@@ -1,5 +1,5 @@
 <?php
-require_once ABSPATH . WPINC . '/class-IXR.php';
+require_once ABSPATH . WPINC . '/class-ixr.php';
 require_once ABSPATH . WPINC . '/class-wp-http-ixr-client.php';
 
 /**

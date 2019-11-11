@@ -112,7 +112,6 @@
 	<exclude-pattern>/src/wp-admin/includes/ms-deprecated\.php</exclude-pattern>
 
 	<exclude-pattern>/src/wp-includes/atomlib\.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/class-IXR\.php</exclude-pattern>
 	<exclude-pattern>/src/wp-includes/class-json\.php</exclude-pattern>
 	<exclude-pattern>/src/wp-includes/class-phpass\.php</exclude-pattern>
 	<exclude-pattern>/src/wp-includes/class-phpmailer\.php</exclude-pattern>
@@ -129,7 +128,6 @@
 
 	<exclude-pattern>/src/wp-includes/blocks/*</exclude-pattern>
 	<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/IXR/*</exclude-pattern>
 	<exclude-pattern>/src/wp-includes/js/*</exclude-pattern>
 	<exclude-pattern>/src/wp-includes/random_compat/*</exclude-pattern>
 	<exclude-pattern>/src/wp-includes/Requests/*</exclude-pattern>

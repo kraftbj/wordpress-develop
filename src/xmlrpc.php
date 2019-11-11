@@ -61,7 +61,7 @@ if ( isset( $_GET['rsd'] ) ) { // http://cyber.law.harvard.edu/blogs/gems/tech/r
 }
 
 include_once( ABSPATH . 'wp-admin/includes/admin.php' );
-include_once( ABSPATH . WPINC . '/class-IXR.php' );
+include_once(ABSPATH . WPINC . '/class-ixr.php');
 include_once( ABSPATH . WPINC . '/class-wp-xmlrpc-server.php' );
 
 /**
