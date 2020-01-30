@@ -589,6 +589,10 @@ class WP_REST_Posts_Controller extends WP_REST_Controller {
 			return $prepared_post;
 		}
 
+		// We will pass a "new" status to stage the new post.
+		$post_status = $prepared_post->post_status;
+		$prepared_post->post_status = 'new';
+
 		$prepared_post->post_type = $this->post_type;
 
 		$post_id = wp_insert_post( wp_slash( (array) $prepared_post ), true );
@@ -663,6 +667,15 @@ class WP_REST_Posts_Controller extends WP_REST_Controller {
 		}
 
 		$request->set_param( 'context', 'edit' );
+
+
+		// Now that the post has been fully setup, we can update the post status to the original one.
+		wp_update_post(
+			array(
+				'ID' => $post_id,
+				'post_status' => $post_status
+			)
+		);
 
 		/**
 		 * Fires after a single post is completely created or updated via the REST API.
@@ -751,22 +764,11 @@ class WP_REST_Posts_Controller extends WP_REST_Controller {
 			return $valid_check;
 		}
 
-		$post = $this->prepare_item_for_database( $request );
+		$post_id = $request['id'];
+		$prepared_post = $this->prepare_item_for_database( $request );
 
-		if ( is_wp_error( $post ) ) {
-			return $post;
-		}
-
-		// Convert the post object to an array, otherwise wp_update_post() will expect non-escaped input.
-		$post_id = wp_update_post( wp_slash( (array) $post ), true );
-
-		if ( is_wp_error( $post_id ) ) {
-			if ( 'db_update_error' === $post_id->get_error_code() ) {
-				$post_id->add_data( array( 'status' => 500 ) );
-			} else {
-				$post_id->add_data( array( 'status' => 400 ) );
-			}
-			return $post_id;
+		if ( is_wp_error( $prepared_post ) ) {
+			return $prepared_post;
 		}
 
 		$post = get_post( $post_id );
@@ -815,6 +817,18 @@ class WP_REST_Posts_Controller extends WP_REST_Controller {
 
 		if ( is_wp_error( $fields_update ) ) {
 			return $fields_update;
+		}
+
+		// Convert the post object to an array, otherwise wp_update_post() will expect non-escaped input.
+		$post_id = wp_update_post( wp_slash( (array) $prepared_post ), true );
+
+		if ( is_wp_error( $post_id ) ) {
+			if ( 'db_update_error' === $post_id->get_error_code() ) {
+				$post_id->add_data( array( 'status' => 500 ) );
+			} else {
+				$post_id->add_data( array( 'status' => 400 ) );
+			}
+			return $post_id;
 		}
 
 		$request->set_param( 'context', 'edit' );
