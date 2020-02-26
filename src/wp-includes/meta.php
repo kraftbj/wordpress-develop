@@ -1097,8 +1097,8 @@ function sanitize_meta( $meta_key, $meta_value, $object_type, $object_subtype = 
 	 *
 	 * @param mixed  $meta_value      Meta value to sanitize.
 	 * @param string $meta_key        Meta key.
- 	 * @param string $object_type     Type of object this meta is registered to. Accepts any value with an associated meta table.
- 	 *                                (e.g. comment, post, term, user, my_custom_meta)
+	 * @param string $object_type     Type of object this meta is registered to. Accepts any value with an associated meta table.
+	 *                                (e.g. comment, post, term, user, my_custom_meta)
 	 */
 	return apply_filters( "sanitize_{$object_type}_meta_{$meta_key}", $meta_value, $meta_key, $object_type );
 }
@@ -1190,8 +1190,8 @@ function register_meta( $object_type, $meta_key, $args, $deprecated = null ) {
 	 *
 	 * @param array  $args        Array of meta registration arguments.
 	 * @param array  $defaults    Array of default arguments.
- 	 * @param string $object_type Type of object this meta is registered to. Accepts any value with an associated meta table.
- 	 *                            (e.g. comment, post, term, user, my_custom_meta)
+	 * @param string $object_type Type of object this meta is registered to. Accepts any value with an associated meta table.
+	 *                            (e.g. comment, post, term, user, my_custom_meta)
 	 * @param string $meta_key    Meta key.
 	 */
 	$args = apply_filters( 'register_meta_args', $args, $defaults, $object_type, $meta_key );
