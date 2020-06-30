@@ -7,13 +7,13 @@
  * @since 1.5.0
  */
 class IXR_Date {
-	var $year;
-	var $month;
-	var $day;
-	var $hour;
-	var $minute;
-	var $second;
-	var $timezone;
+	public $year;
+	public $month;
+	public $day;
+	public $hour;
+	public $minute;
+	public $second;
+	public $timezone;
 
 	/**
 	 * PHP5 constructor.

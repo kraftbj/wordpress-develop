@@ -8,8 +8,8 @@
  */
 class IXR_Error {
 
-	var $code;
-	var $message;
+	public $code;
+	public $message;
 
 	/**
 	 * PHP5 constructor.

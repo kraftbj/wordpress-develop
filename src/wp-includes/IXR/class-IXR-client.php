@@ -9,18 +9,18 @@
  */
 class IXR_Client {
 
-	var $server;
-	var $port;
-	var $path;
-	var $useragent;
-	var $response;
-	var $message = false;
-	var $debug   = false;
-	var $timeout;
-	var $headers = array();
+	public $server;
+	public $port;
+	public $path;
+	public $useragent;
+	public $response;
+	public $message = false;
+	public $debug   = false;
+	public $timeout;
+	public $headers = array();
 
 	// Storage place for an error message
-	var $error = false;
+	public $error = false;
 
 	/**
 	 * PHP5 constructor.

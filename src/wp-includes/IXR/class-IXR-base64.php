@@ -8,7 +8,7 @@
  */
 class IXR_Base64 {
 
-	var $data;
+	public $data;
 
 	/**
 	 * PHP5 constructor.

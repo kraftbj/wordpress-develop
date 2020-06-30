@@ -9,23 +9,23 @@
  */
 class IXR_Message {
 
-	var $message     = false;
-	var $messageType = false;  // methodCall / methodResponse / fault
-	var $faultCode   = false;
-	var $faultString = false;
-	var $methodName  = '';
-	var $params      = array();
+	public $message     = false;
+	public $messageType = false;  // methodCall / methodResponse / fault
+	public $faultCode   = false;
+	public $faultString = false;
+	public $methodName  = '';
+	public $params      = array();
 
 	// Current variable stacks
-	var $_arraystructs      = array();   // The stack used to keep track of the current array/struct
-	var $_arraystructstypes = array(); // Stack keeping track of if things are structs or array
-	var $_currentStructName = array();  // A stack as well
-	var $_param;
-	var $_value;
-	var $_currentTag;
-	var $_currentTagContents;
+	public $_arraystructs      = array();   // The stack used to keep track of the current array/struct
+	public $_arraystructstypes = array(); // Stack keeping track of if things are structs or array
+	public $_currentStructName = array();  // A stack as well
+	public $_param;
+	public $_value;
+	public $_currentTag;
+	public $_currentTagContents;
 	// The XML parser
-	var $_parser;
+	public $_parser;
 
 	/**
 	 * PHP5 constructor.

@@ -7,7 +7,7 @@
  */
 class IXR_ClientMulticall extends IXR_Client {
 
-	var $calls = array();
+	public $calls = array();
 
 	/**
 	 * PHP5 constructor.

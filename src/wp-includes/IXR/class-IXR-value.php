@@ -6,8 +6,8 @@
  * @since 1.5.0
  */
 class IXR_Value {
-	var $data;
-	var $type;
+	public $data;
+	public $type;
 
 	/**
 	 * PHP5 constructor.

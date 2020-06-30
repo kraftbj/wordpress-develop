@@ -8,9 +8,9 @@
  */
 class IXR_Request {
 
-	var $method;
-	var $args;
-	var $xml;
+	public $method;
+	public $args;
+	public $xml;
 
 	/**
 	 * PHP5 constructor.

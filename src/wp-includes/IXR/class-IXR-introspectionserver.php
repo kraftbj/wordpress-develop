@@ -8,8 +8,8 @@
  */
 class IXR_IntrospectionServer extends IXR_Server {
 
-	var $signatures;
-	var $help;
+	public $signatures;
+	public $help;
 
 	/**
 	 * PHP5 constructor.

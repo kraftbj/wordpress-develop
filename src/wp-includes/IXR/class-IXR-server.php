@@ -8,10 +8,10 @@
  */
 class IXR_Server {
 
-	var $data;
-	var $callbacks = array();
-	var $message;
-	var $capabilities;
+	public $data;
+	public $callbacks = array();
+	public $message;
+	public $capabilities;
 
 	/**
 	 * PHP5 constructor.
