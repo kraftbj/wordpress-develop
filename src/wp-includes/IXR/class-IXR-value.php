@@ -18,13 +18,13 @@ class IXR_Value {
 			$type = $this->calculateType();
 		}
 		$this->type = $type;
-		if ( $type == 'struct' ) {
+		if ( 'struct' === $type ) {
 			// Turn all the values in the array in to new IXR_Value objects
 			foreach ( $this->data as $key => $value ) {
 				$this->data[ $key ] = new IXR_Value( $value );
 			}
 		}
-		if ( $type == 'array' ) {
+		if ( 'array' === $type ) {
 			for ( $i = 0, $j = count( $this->data ); $i < $j; $i++ ) {
 				$this->data[ $i ] = new IXR_Value( $this->data[ $i ] );
 			}
@@ -39,7 +39,7 @@ class IXR_Value {
 	}
 
 	public function calculateType() {
-		if ( $this->data === true || $this->data === false ) {
+		if ( true === $this->data || false === $this->data ) {
 			return 'boolean';
 		}
 		if ( is_integer( $this->data ) ) {

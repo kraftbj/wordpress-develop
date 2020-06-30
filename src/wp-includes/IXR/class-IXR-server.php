@@ -36,7 +36,7 @@ class IXR_Server {
 
 	public function serve( $data = false ) {
 		if ( ! $data ) {
-			if ( isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+			if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' !== $_SERVER['REQUEST_METHOD'] ) {
 				if ( function_exists( 'status_header' ) ) {
 					status_header( 405 ); // WP #20986
 					header( 'Allow: POST' );
@@ -51,7 +51,7 @@ class IXR_Server {
 		if ( ! $this->message->parse() ) {
 			$this->error( -32700, 'parse error. not well formed' );
 		}
-		if ( $this->message->messageType != 'methodCall' ) {
+		if ( 'methodCall' !== $this->message->messageType ) {
 			$this->error( -32600, 'server error. invalid xml-rpc. not conforming to spec. Request must be a methodCall' );
 		}
 		$result = $this->call( $this->message->methodName, $this->message->params );
@@ -191,7 +191,7 @@ EOD;
 		foreach ( $methodcalls as $call ) {
 			$method = $call['methodName'];
 			$params = $call['params'];
-			if ( $method == 'system.multicall' ) {
+			if ( 'system.multicall' === $method ) {
 				$result = new IXR_Error( -32600, 'Recursive calls to system.multicall are forbidden' );
 			} else {
 				$result = $this->call( $method, $params );

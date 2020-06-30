@@ -99,7 +99,7 @@ class IXR_IntrospectionServer extends IXR_Server {
 					}
 					break;
 				case 'boolean':
-					if ( $arg !== false && $arg !== true ) {
+					if ( false !== $arg && true !== $arg ) {
 						$ok = false;
 					}
 					break;

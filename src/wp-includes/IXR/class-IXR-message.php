@@ -124,7 +124,7 @@ class IXR_Message {
 		xml_parser_free( $this->_parser );
 
 		// Grab the error messages, if any
-		if ( $this->messageType == 'fault' ) {
+		if ( 'fault' === $this->messageType ) {
 			$this->faultCode   = $this->params[0]['faultCode'];
 			$this->faultString = $this->params[0]['faultString'];
 		}
@@ -212,7 +212,7 @@ class IXR_Message {
 		if ( $value_flag ) {
 			if ( count( $this->_arraystructs ) > 0 ) {
 				// Add value to struct or array
-				if ( $this->_arraystructstypes[ count( $this->_arraystructstypes ) - 1 ] == 'struct' ) {
+				if ( 'struct' === $this->_arraystructstypes[ count( $this->_arraystructstypes ) - 1 ] ) {
 					// Add to struct
 					$this->_arraystructs[ count( $this->_arraystructs ) - 1 ][ $this->_currentStructName[ count( $this->_currentStructName ) - 1 ] ] = $value;
 				} else {

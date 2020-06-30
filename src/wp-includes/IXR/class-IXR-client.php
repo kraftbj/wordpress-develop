@@ -138,7 +138,7 @@ class IXR_Client {
 		}
 
 		// Is the message a fault?
-		if ( $this->message->messageType == 'fault' ) {
+		if ( 'fault' === $this->message->messageType ) {
 			$this->error = new IXR_Error( $this->message->faultCode, $this->message->faultString );
 			return false;
 		}
