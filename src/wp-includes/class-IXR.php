@@ -1,6 +1,9 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
+ * Based on the
  * IXR - The Incutio XML-RPC Library
+ *
+ * Changes made within by WordPress contributors.
  *
  * Copyright (c) 2010, Incutio Ltd.
  * All rights reserved.
@@ -33,7 +36,6 @@
  * @since 1.5.0
  *
  * @copyright  Incutio Ltd 2010 (http://www.incutio.com)
- * @version    1.7.4 7th September 2010
  * @author     Simon Willison
  * @link       http://scripts.incutio.com/xmlrpc/ Site/manual
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD
