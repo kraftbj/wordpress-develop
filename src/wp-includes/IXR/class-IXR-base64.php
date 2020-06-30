@@ -25,6 +25,6 @@ class IXR_Base64 {
 	}
 
 	public function getXml() {
-		return '<base64>' . base64_encode( $this->data ) . '</base64>';
+		return '<base64>' . base64_encode( $this->data ) . '</base64>'; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 	}
 }
