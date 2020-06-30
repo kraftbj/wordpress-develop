@@ -75,7 +75,7 @@ class IXR_IntrospectionServer extends IXR_Server {
 		$return_type = array_shift( $signature );
 
 		// Check the number of arguments
-		if ( count( $args ) != count( $signature ) ) {
+		if ( count( $args ) !== count( $signature ) ) {
 			return new IXR_Error( -32602, 'server error. wrong number of method parameters' );
 		}
 

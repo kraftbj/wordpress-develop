@@ -51,14 +51,14 @@ class IXR_Message {
 		// merged from WP #10698 - this method avoids the RAM usage of preg_replace on very large messages
 		$header        = preg_replace( '/<\?xml.*?\?' . '>/s', '', substr( $this->message, 0, 100 ), 1 );
 		$this->message = trim( substr_replace( $this->message, $header, 0, 100 ) );
-		if ( '' == $this->message ) {
+		if ( '' === $this->message ) {
 			return false;
 		}
 
 		// Then remove the DOCTYPE
 		$header        = preg_replace( '/^<!DOCTYPE[^>]*+>/i', '', substr( $this->message, 0, 200 ), 1 );
 		$this->message = trim( substr_replace( $this->message, $header, 0, 200 ) );
-		if ( '' == $this->message ) {
+		if ( '' === $this->message ) {
 			return false;
 		}
 
@@ -67,7 +67,7 @@ class IXR_Message {
 		if ( '<!DOCTYPE' === strtoupper( $root_tag ) ) {
 			return false;
 		}
-		if ( ! in_array( $root_tag, array( '<methodCall', '<methodResponse', '<fault' ) ) ) {
+		if ( ! in_array( $root_tag, array( '<methodCall', '<methodResponse', '<fault' ), true ) ) {
 			return false;
 		}
 
@@ -178,7 +178,7 @@ class IXR_Message {
 				break;
 			case 'value':
 				// "If no type is indicated, the type is string."
-				if ( trim( $this->_currentTagContents ) != '' ) {
+				if ( trim( $this->_currentTagContents ) !== '' ) {
 					$value      = (string) $this->_currentTagContents;
 					$value_flag = true;
 				}

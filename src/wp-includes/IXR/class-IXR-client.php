@@ -114,7 +114,7 @@ class IXR_Client {
 				}
 				$got_first_line = true;
 			}
-			if ( trim( $line ) == '' ) {
+			if ( trim( $line ) === '' ) {
 				$getting_headers = false;
 			}
 			if ( ! $getting_headers ) {
