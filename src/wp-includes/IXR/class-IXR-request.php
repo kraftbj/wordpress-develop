@@ -15,7 +15,7 @@ class IXR_Request {
 	/**
 	 * PHP5 constructor.
 	 */
-	function __construct( $method, $args ) {
+	public function __construct( $method, $args ) {
 		$this->method = $method;
 		$this->args   = $args;
 		$this->xml    = <<<EOD
@@ -41,11 +41,11 @@ EOD;
 		self::__construct( $method, $args );
 	}
 
-	function getLength() {
+	public function getLength() {
 		return strlen( $this->xml );
 	}
 
-	function getXml() {
+	public function getXml() {
 		return $this->xml;
 	}
 }

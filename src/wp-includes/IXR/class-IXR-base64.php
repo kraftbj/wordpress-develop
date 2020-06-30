@@ -13,7 +13,7 @@ class IXR_Base64 {
 	/**
 	 * PHP5 constructor.
 	 */
-	function __construct( $data ) {
+	public function __construct( $data ) {
 		$this->data = $data;
 	}
 
@@ -24,7 +24,7 @@ class IXR_Base64 {
 		self::__construct( $data );
 	}
 
-	function getXml() {
+	public function getXml() {
 		return '<base64>' . base64_encode( $this->data ) . '</base64>';
 	}
 }

@@ -14,7 +14,7 @@ class IXR_Error {
 	/**
 	 * PHP5 constructor.
 	 */
-	function __construct( $code, $message ) {
+	public function __construct( $code, $message ) {
 		$this->code    = $code;
 		$this->message = htmlspecialchars( $message );
 	}
@@ -26,7 +26,7 @@ class IXR_Error {
 		self::__construct( $code, $message );
 	}
 
-	function getXml() {
+	public function getXml() {
 		$xml = <<<EOD
 <methodResponse>
   <fault>

@@ -30,7 +30,7 @@ class IXR_Message {
 	/**
 	 * PHP5 constructor.
 	 */
-	function __construct( $message ) {
+	public function __construct( $message ) {
 		$this->message =& $message;
 	}
 
@@ -41,7 +41,7 @@ class IXR_Message {
 		self::__construct( $message );
 	}
 
-	function parse() {
+	public function parse() {
 		if ( ! function_exists( 'xml_parser_create' ) ) {
 			trigger_error( __( "PHP's XML extension is not available. Please contact your hosting provider to enable PHP's XML extension." ) );
 			return false;
@@ -131,7 +131,7 @@ class IXR_Message {
 		return true;
 	}
 
-	function tag_open( $parser, $tag, $attr ) {
+	public function tag_open( $parser, $tag, $attr ) {
 		$this->_currentTagContents = '';
 		$this->currentTag          = $tag;
 		switch ( $tag ) {
@@ -152,11 +152,11 @@ class IXR_Message {
 		}
 	}
 
-	function cdata( $parser, $cdata ) {
+	public function cdata( $parser, $cdata ) {
 		$this->_currentTagContents .= $cdata;
 	}
 
-	function tag_close( $parser, $tag ) {
+	public function tag_close( $parser, $tag ) {
 		$valueFlag = false;
 		switch ( $tag ) {
 			case 'int':

@@ -12,7 +12,7 @@ class IXR_Value {
 	/**
 	 * PHP5 constructor.
 	 */
-	function __construct( $data, $type = false ) {
+	public function __construct( $data, $type = false ) {
 		$this->data = $data;
 		if ( ! $type ) {
 			$type = $this->calculateType();
@@ -38,7 +38,7 @@ class IXR_Value {
 		self::__construct( $data, $type );
 	}
 
-	function calculateType() {
+	public function calculateType() {
 		if ( $this->data === true || $this->data === false ) {
 			return 'boolean';
 		}
@@ -74,7 +74,7 @@ class IXR_Value {
 		}
 	}
 
-	function getXml() {
+	public function getXml() {
 		// Return XML for this value
 		switch ( $this->type ) {
 			case 'boolean':
@@ -121,7 +121,7 @@ class IXR_Value {
 	 * @param array $array
 	 * @return bool
 	 */
-	function isStruct( $array ) {
+	public function isStruct( $array ) {
 		$expected = 0;
 		foreach ( $array as $key => $value ) {
 			if ( (string) $key !== (string) $expected ) {

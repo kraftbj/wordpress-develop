@@ -25,7 +25,7 @@ class IXR_Client {
 	/**
 	 * PHP5 constructor.
 	 */
-	function __construct( $server, $path = false, $port = 80, $timeout = 15 ) {
+	public function __construct( $server, $path = false, $port = 80, $timeout = 15 ) {
 		if ( ! $path ) {
 			// Assume we have been given a URL instead
 			$bits         = parse_url( $server );
@@ -64,7 +64,7 @@ class IXR_Client {
 	 *
 	 * @return bool
 	 */
-	function query( ...$args ) {
+	public function query( ...$args ) {
 		$method  = array_shift( $args );
 		$request = new IXR_Request( $method, $args );
 		$length  = $request->getLength();
@@ -147,20 +147,20 @@ class IXR_Client {
 		return true;
 	}
 
-	function getResponse() {
+	public function getResponse() {
 		// methodResponses can only have one param - return that
 		return $this->message->params[0];
 	}
 
-	function isError() {
+	public function isError() {
 		return ( is_object( $this->error ) );
 	}
 
-	function getErrorCode() {
+	public function getErrorCode() {
 		return $this->error->code;
 	}
 
-	function getErrorMessage() {
+	public function getErrorMessage() {
 		return $this->error->message;
 	}
 }
