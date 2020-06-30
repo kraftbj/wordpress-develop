@@ -100,33 +100,33 @@ class IXR_Client {
 			return false;
 		}
 		fputs( $fp, $request );
-		$contents       = '';
-		$debugContents  = '';
-		$gotFirstLine   = false;
-		$gettingHeaders = true;
+		$contents        = '';
+		$debug_contents  = '';
+		$got_first_line  = false;
+		$getting_headers = true;
 		while ( ! feof( $fp ) ) {
 			$line = fgets( $fp, 4096 );
-			if ( ! $gotFirstLine ) {
+			if ( ! $got_first_line ) {
 				// Check line for '200'
 				if ( strstr( $line, '200' ) === false ) {
 					$this->error = new IXR_Error( -32300, 'transport error - HTTP status code was not 200' );
 					return false;
 				}
-				$gotFirstLine = true;
+				$got_first_line = true;
 			}
 			if ( trim( $line ) == '' ) {
-				$gettingHeaders = false;
+				$getting_headers = false;
 			}
-			if ( ! $gettingHeaders ) {
+			if ( ! $getting_headers ) {
 				// merged from WP #12559 - remove trim
 				$contents .= $line;
 			}
 			if ( $this->debug ) {
-				$debugContents .= $line;
+				$debug_contents .= $line;
 			}
 		}
 		if ( $this->debug ) {
-			echo '<pre class="ixr_response">' . htmlspecialchars( $debugContents ) . "\n</pre>\n\n";
+			echo '<pre class="ixr_response">' . htmlspecialchars( $debug_contents ) . "\n</pre>\n\n";
 		}
 
 		// Now parse what we've got back

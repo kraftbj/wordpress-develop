@@ -30,9 +30,9 @@ class IXR_ClientMulticall extends IXR_Client {
 	 *              to the function signature.
 	 */
 	public function addCall( ...$args ) {
-		$methodName    = array_shift( $args );
+		$method_name   = array_shift( $args );
 		$struct        = array(
-			'methodName' => $methodName,
+			'methodName' => $method_name,
 			'params'     => $args,
 		);
 		$this->calls[] = $struct;

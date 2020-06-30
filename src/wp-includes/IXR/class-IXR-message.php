@@ -157,46 +157,46 @@ class IXR_Message {
 	}
 
 	public function tag_close( $parser, $tag ) {
-		$valueFlag = false;
+		$value_flag = false;
 		switch ( $tag ) {
 			case 'int':
 			case 'i4':
-				$value     = (int) trim( $this->_currentTagContents );
-				$valueFlag = true;
+				$value      = (int) trim( $this->_currentTagContents );
+				$value_flag = true;
 				break;
 			case 'double':
-				$value     = (float) trim( $this->_currentTagContents );
-				$valueFlag = true;
+				$value      = (float) trim( $this->_currentTagContents );
+				$value_flag = true;
 				break;
 			case 'string':
-				$value     = (string) trim( $this->_currentTagContents );
-				$valueFlag = true;
+				$value      = (string) trim( $this->_currentTagContents );
+				$value_flag = true;
 				break;
 			case 'dateTime.iso8601':
-				$value     = new IXR_Date( trim( $this->_currentTagContents ) );
-				$valueFlag = true;
+				$value      = new IXR_Date( trim( $this->_currentTagContents ) );
+				$value_flag = true;
 				break;
 			case 'value':
 				// "If no type is indicated, the type is string."
 				if ( trim( $this->_currentTagContents ) != '' ) {
-					$value     = (string) $this->_currentTagContents;
-					$valueFlag = true;
+					$value      = (string) $this->_currentTagContents;
+					$value_flag = true;
 				}
 				break;
 			case 'boolean':
-				$value     = (bool) trim( $this->_currentTagContents );
-				$valueFlag = true;
+				$value      = (bool) trim( $this->_currentTagContents );
+				$value_flag = true;
 				break;
 			case 'base64':
-				$value     = base64_decode( $this->_currentTagContents );
-				$valueFlag = true;
+				$value      = base64_decode( $this->_currentTagContents ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
+				$value_flag = true;
 				break;
 				/* Deal with stacks of arrays and structs */
 			case 'data':
 			case 'struct':
 				$value = array_pop( $this->_arraystructs );
 				array_pop( $this->_arraystructstypes );
-				$valueFlag = true;
+				$value_flag = true;
 				break;
 			case 'member':
 				array_pop( $this->_currentStructName );
@@ -209,7 +209,7 @@ class IXR_Message {
 				break;
 		}
 
-		if ( $valueFlag ) {
+		if ( $value_flag ) {
 			if ( count( $this->_arraystructs ) > 0 ) {
 				// Add value to struct or array
 				if ( $this->_arraystructstypes[ count( $this->_arraystructstypes ) - 1 ] == 'struct' ) {

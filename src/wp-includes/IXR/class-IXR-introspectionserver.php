@@ -70,9 +70,9 @@ class IXR_IntrospectionServer extends IXR_Server {
 		if ( ! $this->hasMethod( $methodname ) ) {
 			return new IXR_Error( -32601, 'server error. requested method "' . $this->message->methodName . '" not specified.' );
 		}
-		$method     = $this->callbacks[ $methodname ];
-		$signature  = $this->signatures[ $methodname ];
-		$returnType = array_shift( $signature );
+		$method      = $this->callbacks[ $methodname ];
+		$signature   = $this->signatures[ $methodname ];
+		$return_type = array_shift( $signature );
 
 		// Check the number of arguments
 		if ( count( $args ) != count( $signature ) ) {
