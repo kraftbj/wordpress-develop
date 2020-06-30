@@ -28,7 +28,7 @@ class IXR_Client {
 	public function __construct( $server, $path = false, $port = 80, $timeout = 15 ) {
 		if ( ! $path ) {
 			// Assume we have been given a URL instead
-			$bits         = parse_url( $server );
+			$bits         = wp_parse_url( $server );
 			$this->server = $bits['host'];
 			$this->port   = isset( $bits['port'] ) ? $bits['port'] : 80;
 			$this->path   = isset( $bits['path'] ) ? $bits['path'] : '/';
