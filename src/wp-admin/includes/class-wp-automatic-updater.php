@@ -290,9 +290,13 @@ class WP_Automatic_Updater {
 			}
 		}
 
-		// If updating a plugin or theme, ensure the minimum PHP version requirements are satisfied.
+		// If updating a plugin or theme, ensure the minimum PHP and WP version requirements are satisfied.
 		if ( in_array( $type, array( 'plugin', 'theme' ), true ) ) {
 			if ( ! empty( $item->requires_php ) && version_compare( PHP_VERSION, $item->requires_php, '<' ) ) {
+				return false;
+			}
+			// The api.wordpress.org response should not include updates that are not compatible; this is a safety measure.
+			if ( ! empty( $item->requires ) && ! is_wp_version_compatible( $item->requires ) ) {
 				return false;
 			}
 		}
@@ -474,6 +478,11 @@ class WP_Automatic_Updater {
 			$upgrader->maintenance_mode( true );
 		}
 
+		if ( 'core' !== $type ) {
+			// Before actually attempting the update, let's run the usual checks against the downloaded package.
+			add_filter( 'upgrader_source_selection', array( $upgrader, 'check_package' ) );
+		}
+
 		// Boom, this site's about to get a whole new splash of paint!
 		$upgrade_result = $upgrader->upgrade(
 			$upgrader_item,
@@ -499,6 +508,10 @@ class WP_Automatic_Updater {
 		 */
 		if ( 'translation' !== $type ) {
 			$upgrader->maintenance_mode( true );
+		}
+
+		if ( 'core' !== $type ) {
+			remove_filter( 'upgrader_source_selection', array( $upgrader, 'check_package' ) );
 		}
 
 		// If the filesystem is unavailable, false is returned.
