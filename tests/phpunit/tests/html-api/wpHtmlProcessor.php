@@ -133,7 +133,7 @@ class Tests_HtmlApi_WpHtmlProcessor extends WP_UnitTestCase {
 
 			// Create a bookmark inside of that stack.
 			if ( null !== $processor->get_attribute( 'two' ) ) {
-				$processor->set_bookmark( 'two' );
+				$this->assertTrue( $processor->set_bookmark( 'two' ) );
 				break;
 			}
 		}
@@ -559,6 +559,31 @@ class Tests_HtmlApi_WpHtmlProcessor extends WP_UnitTestCase {
 		$this->assertTrue( $processor->next_tag() );
 		$this->assertSame( 'MATH', $processor->get_tag() );
 		$this->assertTrue( $processor->expects_closer() );
+	}
+
+	/**
+	 * Ensures that expects_closer works for void-like elements in foreign content.
+	 *
+	 * For example, `<svg><input>text` creates an `svg:input` that contains a text node.
+	 * This input should not be treated as a void tag and _should_ expect a close tag.
+	 *
+	 * @dataProvider data_void_tags
+	 *
+	 * @ticket 62363
+	 */
+	public function test_expects_closer_foreign_content_not_void( string $void_tag ) {
+		$processor = WP_HTML_Processor::create_fragment( "<svg><{$void_tag}>" );
+
+		$this->assertTrue( $processor->next_tag( $void_tag ) );
+
+		// Some void-like tags will close the SVG element and be HTML tags.
+		if ( $processor->get_namespace() === 'svg' ) {
+			$this->assertSame( array( 'HTML', 'BODY', 'SVG', $void_tag ), $processor->get_breadcrumbs() );
+			$this->assertTrue( $processor->expects_closer() );
+		} else {
+			$this->assertSame( array( 'HTML', 'BODY', $void_tag ), $processor->get_breadcrumbs() );
+			$this->assertFalse( $processor->expects_closer() );
+		}
 	}
 
 	/**
