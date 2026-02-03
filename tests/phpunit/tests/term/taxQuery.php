@@ -506,6 +506,93 @@ class Tests_Term_Tax_Query extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests that the NOT IN operator uses NOT EXISTS for better performance.
+	 *
+	 * NOT EXISTS can use index seeks and exit early when a match is found,
+	 * whereas NOT IN must materialize the entire subquery result set.
+	 *
+	 * @covers WP_Tax_Query::get_sql_for_clause
+	 */
+	public function test_get_sql_operator_not_in_uses_not_exists() {
+		register_taxonomy( 'wptests_tax', 'post' );
+
+		$t1 = self::factory()->term->create(
+			array(
+				'taxonomy' => 'wptests_tax',
+			)
+		);
+
+		$tq = new WP_Tax_Query(
+			array(
+				array(
+					'taxonomy' => 'wptests_tax',
+					'field'    => 'term_id',
+					'operator' => 'NOT IN',
+					'terms'    => array( $t1 ),
+				),
+			)
+		);
+
+		global $wpdb;
+		$sql = $tq->get_sql( $wpdb->posts, 'ID' );
+
+		// Verify NOT EXISTS is used instead of NOT IN for performance.
+		$this->assertStringContainsString( 'NOT EXISTS', $sql['where'], 'SQL query should use NOT EXISTS for the NOT IN operator.' );
+		$this->assertStringNotContainsString( 'NOT IN', $sql['where'], 'SQL query should not use NOT IN subquery pattern.' );
+
+		// Verify the correlated subquery structure.
+		$this->assertStringContainsString( 'SELECT 1', $sql['where'], 'SQL query should use SELECT 1 in the subquery.' );
+		$this->assertStringContainsString( "object_id = {$wpdb->posts}.ID", $sql['where'], 'SQL query should correlate on object_id.' );
+
+		_unregister_taxonomy( 'wptests_tax' );
+	}
+
+	/**
+	 * Tests that the NOT IN operator with multiple terms uses NOT EXISTS.
+	 *
+	 * @covers WP_Tax_Query::get_sql_for_clause
+	 */
+	public function test_get_sql_operator_not_in_multiple_terms_uses_not_exists() {
+		register_taxonomy( 'wptests_tax', 'post' );
+
+		$t1 = self::factory()->term->create(
+			array(
+				'taxonomy' => 'wptests_tax',
+			)
+		);
+		$t2 = self::factory()->term->create(
+			array(
+				'taxonomy' => 'wptests_tax',
+			)
+		);
+		$t3 = self::factory()->term->create(
+			array(
+				'taxonomy' => 'wptests_tax',
+			)
+		);
+
+		$tq = new WP_Tax_Query(
+			array(
+				array(
+					'taxonomy' => 'wptests_tax',
+					'field'    => 'term_id',
+					'operator' => 'NOT IN',
+					'terms'    => array( $t1, $t2, $t3 ),
+				),
+			)
+		);
+
+		global $wpdb;
+		$sql = $tq->get_sql( $wpdb->posts, 'ID' );
+
+		// Verify NOT EXISTS is used instead of NOT IN for performance.
+		$this->assertStringContainsString( 'NOT EXISTS', $sql['where'], 'SQL query should use NOT EXISTS for the NOT IN operator with multiple terms.' );
+		$this->assertStringNotContainsString( "{$wpdb->posts}.ID NOT IN", $sql['where'], 'SQL query should not use NOT IN subquery pattern.' );
+
+		_unregister_taxonomy( 'wptests_tax' );
+	}
+
+	/**
 	 * @ticket 18105
 	 * @covers WP_Tax_Query::get_sql
 	 */

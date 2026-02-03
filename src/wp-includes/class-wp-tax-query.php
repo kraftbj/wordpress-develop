@@ -439,10 +439,16 @@ class WP_Tax_Query {
 
 			$terms = implode( ',', $terms );
 
-			$where = "$this->primary_table.$this->primary_id_column NOT IN (
-				SELECT object_id
+			/*
+			 * Uses NOT EXISTS instead of NOT IN for better performance.
+			 * NOT EXISTS can use index seeks and exit early when a match is found,
+			 * whereas NOT IN must materialize the entire subquery result set.
+			 */
+			$where = "NOT EXISTS (
+				SELECT 1
 				FROM $wpdb->term_relationships
 				WHERE term_taxonomy_id IN ($terms)
+				AND object_id = $this->primary_table.$this->primary_id_column
 			)";
 
 		} elseif ( 'AND' === $operator ) {
